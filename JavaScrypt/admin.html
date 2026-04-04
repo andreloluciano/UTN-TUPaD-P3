@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Food Store</title>
+</head>
+<body>
+
+    <header>
+        <h1>Panel de Administración</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Volver a la Tienda</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Gestión de Productos</h2>
+            <button type="button">+ Nuevo Producto</button><br>
+            <br>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><img src="assets/Screenshot 2026-03-21 160921.png" alt="Cangreburger" width="50"></td>
+                        <td>Cangreburger</td>
+                        <td>Hamburguesas</td>
+                        <td>$25000</td>
+                        <td>12</td>
+                        <td>
+                            <a href="#">Editar</a> | 
+                            <a href="#">Eliminar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><img src="assets/pizza.png" alt="SpiderPizza" width="50"></td>
+                        <td>SpiderPizza</td>
+                        <td>Pizzas</td>
+                        <td>$18000</td>
+                        <td>5</td>
+                        <td>
+                            <a href="#">Editar</a> | 
+                            <a href="#">Eliminar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><img src="assets/placeholder.png" alt="Papas con Cheddar" width="50"></td>
+                        <td>Papas con Cheddar</td>
+                        <td>Papas Fritas</td>
+                        <td>$8000</td>
+                        <td>0</td>
+                        <td>
+                            <a href="#">Editar</a> | 
+                            <a href="#">Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr>
+
+        <section>
+            <details>
+                <summary>Click aquí para Agregar producto rápido</summary>
+                <form>
+                    <p>
+                        <label for="nombre">Nombre del Producto:</label><br>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej: SpiderPizza">
+                    </p>
+
+                    <p>
+                        <label for="precio">Precio:</label><br>
+                        <input type="number" id="precio" name="precio">
+                    </p>
+
+                    <p>
+                        <label for="stock">Stock Inicial:</label><br>
+                        <input type="number" id="stock" name="stock">
+                    </p>
+
+                    <p>
+                        <label for="categoria">Categoría:</label><br>
+                        <select id="categoria" name="categoria">
+                            <option value="">Seleccione una opción</option>
+                            <option value="hamburguesas">Hamburguesas</option>
+                            <option value="pizzas">Pizzas</option>
+                            <option value="papas">Papas Fritas</option>
+                            <option value="bebidas">Bebidas</option>
+                        </select>
+                    </p>
+
+                    <p>
+                        <label for="descripcion">Descripción:</label><br>
+                        <textarea id="descripcion" name="descripcion" rows="4" cols="40" placeholder="Ingrese los ingredientes"></textarea>
+                    </p>
+
+                    <button type="submit">Guardar Producto</button>
+                </form>
+            </details>
+        </section>
+    </main>
+         <br><br><br>
+    <footer>
+        <p>Panel de Administración - Food Store v0.1</p>
+        <p>&copy; 2026 Luciano Andrelo - Programacion 3</p>
+    </footer>
+
+</body>
+</html>
