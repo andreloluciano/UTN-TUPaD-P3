@@ -1,7 +1,7 @@
-// 1. Array de Strings para las categorías
+//Array de Strings para las categorías
 const categorias = ["Hamburguesas", "Pizzas", "Papas Fritas", "Bebidas"];
 
-// 2. Array de Objetos para los productos 
+//Array de Objetos para los productos 
 const productos = [
     {
         id: 1,
@@ -24,7 +24,7 @@ const productos = [
         nombre: "Papas de Portal",
         descripcion: "Papas fritas con sal de otra dimensión. ¡Cuidado con los portales!",
         precio: 8,
-        imagen: "assets/papasportal.png", // Placeholder para la foto
+        imagen: "assets/papasportal.png", 
         categoria: "Papas Fritas"
     },
     {
