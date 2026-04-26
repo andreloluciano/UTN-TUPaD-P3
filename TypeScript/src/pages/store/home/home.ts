@@ -1,19 +1,17 @@
 import { PRODUCTS, getCategories } from "../../../data/data";
+import type { Product, CartItem } from "../../../types/product";
 const inputBuscar = document.getElementById("buscar") as HTMLInputElement;
-
-
-// contenedor
-const contenedor = document.getElementById("contenedor-productos") as HTMLDivElement;
+const contenedor = document.getElementById("contenedor-productos") as HTMLDivElement; // contenedor
 const listaCategorias = document.getElementById("lista-categorias") as HTMLUListElement; //importo categorias
 
 
 // funcion para agregar productos al carrito
-const agregarAlCarrito = (producto: any) => { 
+const agregarAlCarrito = (producto: Product) => { 
   // traigo carrito del localstg, si no existe creo array vacio
-  const carrito = JSON.parse(localStorage.getItem("cart") || "[]");
+  const carrito: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
 
   // busco si el producto ya existe
-  const existe = carrito.find((item: any) => item.id === producto.id);
+  const existe = carrito.find((item: CartItem) => item.id === producto.id);
 
   if (existe) {
     existe.quantity += 1; // aumento cantidad si existe
@@ -32,8 +30,8 @@ const renderProductos = (productos: typeof PRODUCTS) => {
 
   // si no hay productos para mostrar muestro mensaje
 if (productos.length === 0) {
-  const mensaje = document.createElement("p");
-  mensaje.textContent = "No se encontraron productos";
+  const mensaje = document.createElement("p"); // creo un <p>
+  mensaje.textContent = "No se encontraron productos"; // aplico texto al <p>
 
   contenedor.appendChild(mensaje);
   return; // corto la funcion
