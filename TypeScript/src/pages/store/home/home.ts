@@ -21,10 +21,10 @@ const agregarAlCarrito = (producto: Product) => {
 
   localStorage.setItem("cart", JSON.stringify(carrito)); // guardo carrito actualizado el localSt
 
-  alert("Producto agregado al carrito");
+  alert("Producto agregado al carrito"); // temporal
 };
 
-// función render, recorre los productos y los mete dentr odel contenedor
+// funcion render, recorre los productos y los mete dentr odel contenedor
 const renderProductos = (productos: typeof PRODUCTS) => { 
   contenedor.innerHTML = ""; // limpia antes de renderizar
 
@@ -38,20 +38,19 @@ if (productos.length === 0) {
 }
 
   productos.forEach((producto) => {
-    const card = document.createElement("div"); // creo la card donde van los datos
-
+    const card = document.createElement("div"); // creo contenedor para cada producto
     card.innerHTML = `
       <h3>${producto.nombre}</h3>
       <p>${producto.descripcion}</p>
       <p>Precio: $${producto.precio}</p>
     `;
 
-    // boton
+    // boton para agregar el producto
     const button = document.createElement("button");
 button.textContent = "Agregar al carrito";
 
 button.addEventListener("click", () => {
-  agregarAlCarrito(producto);
+  agregarAlCarrito(producto); // con click llamo a la funcion 
 });
 
 card.appendChild(button); // agrego el boton a la card
@@ -60,14 +59,14 @@ card.appendChild(button); // agrego el boton a la card
   });
 };
 
-// función para mostrar categorías en pantalla
+// mostrar categorias en pantalla
 const renderCategorias = () => {
   const categorias = getCategories(); // traigo categorias desde data.ts
   listaCategorias.innerHTML = ""; // limpio antes de renderizar
  
   const liTodos = document.createElement("li");  // opcion para mostrar todos los productos 
   liTodos.textContent = "Todos";
-  liTodos.addEventListener("click", () => {
+  liTodos.addEventListener("click", () => { // evento para mostrar Todos
     renderProductos(PRODUCTS);
   });
 
@@ -80,11 +79,11 @@ const renderCategorias = () => {
 
     // evento de click para filtrar productos por categoria
     li.addEventListener("click", () => {
-      const productosFiltrados = PRODUCTS.filter((producto) => // filtra solo con cards de esa categoria
+      const productosFiltrados = PRODUCTS.filter((producto) => // filtra solo con productos de esa categoria
         producto.categorias.some((cat) => cat.nombre === categoria.nombre)
-      ); // some pregunta si el producto tiene alguna categoria con ese nombre (por ser ICategory[])
+      ); // some pregunta si el producto tiene alguna categoria con ese nombre
 
-      renderProductos(productosFiltrados);
+      renderProductos(productosFiltrados); // renderizo con productos filtrados
     });
 
     listaCategorias.appendChild(li);

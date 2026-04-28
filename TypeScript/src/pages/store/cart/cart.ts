@@ -1,5 +1,4 @@
 import type { CartItem } from "../../../types/product";
-// traemos el contenedor
 const contenedor = document.getElementById("cart-container") as HTMLDivElement;
 const clearCartButton = document.getElementById("clearCart") as HTMLButtonElement;
 
@@ -37,9 +36,44 @@ const renderCarrito = () => {
     div.innerHTML = ` 
       <h3>${producto.nombre}</h3>
       <p>Precio: $${producto.precio}</p>
-      <p>Subtotal: $${producto.precio * producto.quantity}</p>
-    `; // inserto y muestro contenido en el bloque div
+      <p>Subtotal: $${producto.precio * producto.quantity}</p> 
+    `; // inserto y muestro contenido en el bloque div  // subtotal
 
+    // funcion para aumentar cantidad
+const aumentarCantidad = (id: number) => { // recibe el id del producto
+
+  const carrito = JSON.parse(localStorage.getItem("cart") || "[]"); // traigo el carrito de localStorage
+
+  const producto = carrito.find((item: CartItem) => item.id === id); // busca producto que coincida con ese id
+
+  if (producto) { 
+    producto.quantity += 1; // si existe cambio cantidad 
+  }
+
+  localStorage.setItem("cart", JSON.stringify(carrito)); // guardo carrito actualizado
+
+  renderCarrito();
+};
+
+
+// funcion para disminuir cantidad
+const disminuirCantidad = (id: number) => {
+
+  let carrito = JSON.parse(localStorage.getItem("cart") || "[]"); // traigo el carrito de localStorage
+
+  const producto = carrito.find((item: CartItem) => item.id === id); // busca producto que coincida con ese id
+
+  if (producto) {
+    producto.quantity -= 1;
+  }
+
+  // si llega a 0 se elimina
+  carrito = carrito.filter((item: CartItem) => item.quantity > 0);
+
+  localStorage.setItem("cart", JSON.stringify(carrito));
+
+  renderCarrito();
+};
     
     // boton disminuir cantidad
     const botonMenos = document.createElement("button");
@@ -97,7 +131,7 @@ const eliminarProducto = (id: number) => {
   let carrito = JSON.parse(localStorage.getItem("cart") || "[]");
 
   // dejamos todos menos el que tenga ese id
-  carrito = carrito.filter((item: any) => item.id !== id);
+  carrito = carrito.filter((item: CartItem) => item.id !== id);
 
   // guardamos el carrito actualizado
   localStorage.setItem("cart", JSON.stringify(carrito));
@@ -118,41 +152,7 @@ clearCartButton.addEventListener("click", () => {
 });
 
 
-// aumentar cantidad
-const aumentarCantidad = (id: number) => { // recibe el id del producto
 
-  const carrito = JSON.parse(localStorage.getItem("cart") || "[]"); // traigo el carrito de localStorage
-
-  const producto = carrito.find((item: any) => item.id === id); // busca producto que coincida con ese id
-
-  if (producto) { 
-    producto.quantity += 1; // si existe cambio cantidad 
-  }
-
-  localStorage.setItem("cart", JSON.stringify(carrito)); // guardo carrito actualizado
-
-  renderCarrito();
-};
-
-
-// disminuir cantidad
-const disminuirCantidad = (id: number) => {
-
-  let carrito = JSON.parse(localStorage.getItem("cart") || "[]"); // traigo el carrito de localStorage
-
-  const producto = carrito.find((item: any) => item.id === id); // busca producto que coincida con ese id
-
-  if (producto) {
-    producto.quantity -= 1;
-  }
-
-  // si llega a 0 se elimina
-  carrito = carrito.filter((item: any) => item.quantity > 0);
-
-  localStorage.setItem("cart", JSON.stringify(carrito));
-
-  renderCarrito();
-};
 
 
 // ejecuto
