@@ -150,24 +150,24 @@ public class Main {
                 // pedidos se inicializa automaticamente en builder.default
                 .build();
 
-        // categorias
+// categorias
         Categoria categoria1 = Categoria.builder()
                 .id(1)
-                .nombre("Perifericos")
-                .descripcion("productos para usar con la computadora")
+                .nombre("Pizzas")
+                .descripcion("pizzas artesanales")
                 // aca iria productos pero no hace falta porque usa builder.default
                 .build();
 
         Categoria categoria2 = Categoria.builder()
                 .id(2)
-                .nombre("Computadoras")
-                .descripcion("equipos informaticos")
+                .nombre("Hamburguesas")
+                .descripcion("hamburguesas gourmet")
                 .build();
 
         Categoria categoria3 = Categoria.builder()
                 .id(3)
-                .nombre("Audio")
-                .descripcion("productos de sonido")
+                .nombre("Bebidas")
+                .descripcion("bebidas frias")
                 .build();
 
         // agregacion entre categoria y producto
@@ -259,7 +259,7 @@ public class Main {
         // punto 5, ya que producto compara con nombre, creo otro con el mismo nombre
         Producto productoRepetido = Producto.builder()
                 .id(99)
-                .nombre("Mouse Logitech") // mismo nombre
+                .nombre("Pizza Muzzarella") // mismo nombre
                 .precio(999999)
                 .descripcion("producto repetido")
                 .stock(1)
@@ -268,7 +268,7 @@ public class Main {
                 .build();
 
         // comparo producto repetido con todos los productos del set
-        // mouse logitech deberia dar true
+        // Pizza Muzzarella deberia dar true
         System.out.println("\n----- comparacion de equals -----");
 
         for (Producto producto : productos) {
