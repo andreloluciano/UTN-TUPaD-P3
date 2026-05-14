@@ -12,6 +12,17 @@ import java.util.Set;
 
 public class Main {
 
+    // punto 4 TP progFuncional
+    public static void mostrarProductosConBajoStock(Set<Producto> productos, int stockMinimo) {
+        productos.stream()
+                .filter(producto -> producto.getStock() < stockMinimo) // filtro productos al valor indicado
+                .forEach(producto -> System.out.println( // muestro los productos encontrados
+                        producto.getNombre()
+                                + " - stock: "
+                                + producto.getStock()
+                ));
+    }
+
     public static void main(String[] args) {
 
         // creo el set general de productos
@@ -275,10 +286,26 @@ public class Main {
             System.out.println(
                     "comparando con: "
                             + producto.getNombre()
-                            + " -> "
+                            + " = "
                             + productoRepetido.equals(producto)
             );
         }
        // System.out.println(productos.contains(productoRepetido)); // si da true es repetido
+
+        // punto 2 TP progFuncional
+        System.out.println("\n----- productos disponibles -----");
+        productos.stream()
+                .filter(producto -> producto.isDisponible())
+                .forEach(producto -> System.out.println(producto));
+
+        // punto 3 TP  progFuncional
+        System.out.println("\n----- cantidad de items del pedido -----");
+        System.out.println("El pedido 1 tiene " + pedido1.calcularCantidadItems() + " items");
+
+        // punto 4 TP  progFuncional
+        System.out.println("\n----- productos con bajo stock -----");
+        mostrarProductosConBajoStock(productos, 6);
+
+
     }
 }

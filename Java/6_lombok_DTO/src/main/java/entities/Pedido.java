@@ -29,13 +29,29 @@ public class Pedido extends Base implements Calculable {
     private Set<DetallePedido> detallesPedido = new HashSet<>(); // composicion con DetallePedido
     // un pedido contiene muchos detalles, si desaparece el pedido, los detalles tambien
 
-    @Override
+    /*@Override
     public void calcularTotal() {
 
         total = 0;  // reinicio el  total
         for (DetallePedido detalle : detallesPedido) { // recorro los detalles
             total += detalle.getSubtotal(); // sumo subtotales
         }
+    }*/
+
+    // TP progFuncional
+    @Override
+    public void calcularTotal() {
+        total = detallesPedido.stream()
+                .map(detalle -> detalle.getSubtotal()) // map transforma cada detalle en subtotal
+                .reduce(0.0, (acumulador, subtotalActual) -> acumulador + subtotalActual);
+        // reduce para sumar subtotales
+    }
+
+    // TP progFuncional
+    public int calcularCantidadItems() {
+        return detallesPedido.stream()
+                .map(detalle -> detalle.getCantidad())
+                .reduce(0, (acumulador, cantidadActual) -> acumulador + cantidadActual);
     }
 
     // metodo para agregar detalles al pedido
