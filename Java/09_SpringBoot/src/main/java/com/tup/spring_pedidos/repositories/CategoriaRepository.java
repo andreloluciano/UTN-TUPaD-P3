@@ -1,4 +1,9 @@
 package com.tup.spring_pedidos.repositories;
 
-public interface CategoriaRepository {
+import com.tup.spring_pedidos.entities.Categoria;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 }

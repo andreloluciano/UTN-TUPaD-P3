@@ -1,7 +1,7 @@
 package com.tup.spring_pedidos.dtos.pedido;
 
-import enums.Estado;
-import enums.FormaPago;
+import com.tup.spring_pedidos.enums.Estado;
+import com.tup.spring_pedidos.enums.FormaPago;
 import lombok.*;
 import java.time.LocalDate;
 

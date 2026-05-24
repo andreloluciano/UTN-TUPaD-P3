@@ -1,14 +1,15 @@
 package com.tup.spring_pedidos.config;
 
+import com.tup.spring_pedidos.dtos.categoria.CategoriaCreate;
 import com.tup.spring_pedidos.dtos.producto.ProductoCreate;
 import com.tup.spring_pedidos.dtos.usuario.UsuarioCreate;
+import com.tup.spring_pedidos.services.CategoriaService;
 import com.tup.spring_pedidos.services.PedidoService;
 import com.tup.spring_pedidos.services.ProductoService;
 import com.tup.spring_pedidos.services.UsuarioService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import com.tup.spring_pedidos.entities.Usuario;
-import com.tup.spring_pedidos.entities.Producto;
 import com.tup.spring_pedidos.dtos.detallePedido.DetallePedidoCreate;
 import com.tup.spring_pedidos.enums.Estado;
 import com.tup.spring_pedidos.enums.FormaPago;
@@ -19,12 +20,15 @@ public class DataInitializer implements CommandLineRunner {
     private final UsuarioService usuarioService;
     private final ProductoService productoService;
     private final PedidoService pedidoService;
+    private final CategoriaService categoriaService;
 
-    //  inyecto el service por constructor
-    public DataInitializer(UsuarioService usuarioService, ProductoService productoService,  PedidoService pedidoService) {
+    //  inyecto dependencias por constructor
+    public DataInitializer(UsuarioService usuarioService, ProductoService productoService,
+                           PedidoService pedidoService, CategoriaService categoriaService) {
         this.usuarioService = usuarioService;
         this.productoService = productoService;
         this.pedidoService = pedidoService;
+        this.categoriaService = categoriaService;
     }
 
     @Override
@@ -135,9 +139,26 @@ public class DataInitializer implements CommandLineRunner {
                 .disponible(true)
                 .build();
 
-        // creo a partir de dtos
-        usuarioService.crearUsuario(usuario1);
-        usuarioService.crearUsuario(usuario2);
+        CategoriaCreate categoria1 = CategoriaCreate.builder()
+                .nombre("Pizzas")
+                .descripcion("pizzas artesanales")
+                .build();
+
+        CategoriaCreate categoria2 = CategoriaCreate.builder()
+                .nombre("Hamburguesas")
+                .descripcion("hamburguesas gourmet")
+                .build();
+
+        CategoriaCreate categoria3 = CategoriaCreate.builder()
+                .nombre("Bebidas")
+                .descripcion("bebidas frias")
+                .build();
+
+        // guardo las entidades en una variable para usarlos en los pedidos
+        //  y creo a partir de dtos
+        Usuario userCreado1 = usuarioService.crearUsuario(usuario1);
+        Usuario userCreado2 = usuarioService.crearUsuario(usuario2);
+
         productoService.crearProducto(producto1);
         productoService.crearProducto(producto2);
         productoService.crearProducto(producto3);
@@ -149,8 +170,40 @@ public class DataInitializer implements CommandLineRunner {
         productoService.crearProducto(producto9);
         productoService.crearProducto(producto10);
 
-        System.out.println("usuarios creados");
-        System.out.println("productos creados desde dtos");
+        categoriaService.crearCategoria(categoria1);
+        categoriaService.crearCategoria(categoria2);
+        categoriaService.crearCategoria(categoria3);
 
+        System.out.println("usuarios creados");
+        System.out.println("productos creados");
+        System.out.println("categorias creadas");
+
+        // pedido + detalles
+        // detalles del pedido 1
+        List<DetallePedidoCreate> detallesPedido1 = List.of(
+                DetallePedidoCreate.builder().productoId(1L).cantidad(2).build(),
+                DetallePedidoCreate.builder().productoId(7L).cantidad(2).build()
+        );
+        // creo el Pedido 1 asignado al usuario1
+        pedidoService.crearPedido(userCreado1, Estado.PENDIENTE, FormaPago.EFECTIVO, detallesPedido1);
+
+        // detalles del pedido 2
+        List<DetallePedidoCreate> detallesPedido2 = List.of(
+                DetallePedidoCreate.builder().productoId(5L).cantidad(1).build(),
+                DetallePedidoCreate.builder().productoId(9L).cantidad(1).build()
+        );
+        // creo el pedido 2 asignado al usuario2
+        pedidoService.crearPedido(userCreado2, Estado.CONFIRMADO, FormaPago.TARJETA, detallesPedido2);
+
+        // detalles del pedido3
+        List<DetallePedidoCreate> detallesPedido3 = List.of(
+                DetallePedidoCreate.builder().productoId(3L).cantidad(1).build(),
+                DetallePedidoCreate.builder().productoId(8L).cantidad(2).build(),
+                DetallePedidoCreate.builder().productoId(10L).cantidad(1).build()
+        );
+        // creo el Pedido 3 asignado al usuario1
+        pedidoService.crearPedido(userCreado1, Estado.TERMINADO, FormaPago.TRANSFERENCIA, detallesPedido3);
+
+        System.out.println("pedidos con detalles creados");
     }
 }
