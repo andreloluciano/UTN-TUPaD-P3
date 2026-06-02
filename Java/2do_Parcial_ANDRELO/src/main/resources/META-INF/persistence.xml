@@ -31,7 +31,7 @@
             <property name="jakarta.persistence.jdbc.password" value=""/>
 
             <!-- Dialecto -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/> -->
 
             <!-- Hibernate -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>

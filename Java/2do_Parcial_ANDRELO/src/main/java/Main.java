@@ -69,7 +69,7 @@ public class Main {
             System.out.println("\n----- categorias -----");
             System.out.println("1. alta");
             System.out.println("2. modificacion");
-            System.out.println("3. baja logica");
+            System.out.println("3. eliminar categoria");
             System.out.println("4. listado");
             System.out.println("5. volver");
             System.out.print("opcion: ");
@@ -108,7 +108,7 @@ public class Main {
             System.out.println("\n----- productos -----");
             System.out.println("1. alta");
             System.out.println("2. modificacion");
-            System.out.println("3. baja logica");
+            System.out.println("3. elimnar producto");
             System.out.println("4. listado");
             System.out.println("5. volver");
             System.out.print("opcion: ");
@@ -182,28 +182,40 @@ public class Main {
                 .descripcion(descripcion)
                 .build();
 
-        Categoria categoriaGuardada = categoriaRepository.guardar(categoria);
-
+        // categoriaRepository.guardar(categoria);
+        // System.out.println("categoria creada");
+        Categoria categoriaGuardada = categoriaRepository.guardar(categoria); // guardo en variable para mostrar id
         System.out.println("categoria creada con id: " + categoriaGuardada.getId());
     }
 
     public static void bajaCategoria() {
+
+        System.out.println("categorias disponibles para eliminar: ");
+        listarCategorias();
         System.out.print("id de categoria a eliminar: ");
         Long id = scanner.nextLong();
         scanner.nextLine();
 
-        // guardo el valor en una variable para ver si quedo true or false y muestro
+        // guardo en variable para obtener su nombre
+        Categoria categoria = categoriaRepository.buscarPorId(id).orElse(null);
+
+        // valido que exista y no este eliminada
+        if (categoria == null || categoria.isEliminado()) {
+            System.out.println("no existe una categoria activa con ese id");
+            return;
+        }
+
         boolean eliminada = categoriaRepository.eliminarLogico(id);
 
-        if (eliminada) {
-            System.out.println("categoria eliminada correctamente");
-        } else {
-            System.out.println("no existe una categoria con ese id");
+        if (eliminada) { // uso el boolean de eliminar
+            System.out.println("categoria " + categoria.getNombre() + ", ID: " +
+                    categoria.getId() + " eliminada");
         }
     }
 
     public static void modificarCategoria() {
 
+        System.out.println("categorias disponibles para modificar: ");
         listarCategorias();
 
         System.out.print("id de categoria a editar: ");
@@ -257,10 +269,9 @@ public class Main {
         }
     }
 
-    // alta de producto
     public static void altaProducto() {
 
-        // obtengo las categorias activas
+        //  categorias activas
         System.out.println("categorias disponibles: ");
         List<Categoria> categorias = categoriaRepository.listarActivos();
 
@@ -330,12 +341,12 @@ public class Main {
                 .categoria(categoria)
                 .build();
 
-        //categoria.agregarProducto(producto);
+        //categoria.agregarProducto(producto); relacion cambiada
+        //productoRepository.guardar(producto);
+        //System.out.println("producto creado");
 
-        Producto productoGuardado = productoRepository.guardar(producto);
-
-        // muestro el id generado y la categoria asignada
-        System.out.println(
+        Producto productoGuardado = productoRepository.guardar(producto); // guardo en variable para mostrar id
+        System.out.println( // muestro el id generado y la categoria asignada
                 "producto creado con id: "
                         + productoGuardado.getId()
                         + " en categoria: "
@@ -368,7 +379,8 @@ public class Main {
         boolean eliminado = productoRepository.eliminarLogico(id);
 
         if (eliminado) {
-            System.out.println("producto eliminado correctamente: " + producto.getNombre());
+            System.out.println("producto " + producto.getNombre() + ", ID: " +
+                    producto.getId() + " eliminado");
         } else {
             System.out.println("no se pudo eliminar el producto");
         }
@@ -398,18 +410,18 @@ public class Main {
 
         System.out.println("precio actual: " + producto.getPrecio());
         System.out.print("nuevo precio: ");
-        String precioTexto = scanner.nextLine();
+        String precioTexto = scanner.nextLine(); // en String para poder dejar input vacio
 
         System.out.println("stock actual: " + producto.getStock());
         System.out.print("nuevo stock: ");
         String stockTexto = scanner.nextLine();
 
-        // si el nombre, preci y stock  no estan vacios los actualizo
+        // si el nombre, precio y stock  no estan vacios los actualizo, sino mantien el valor
         if (!nombre.isBlank()) {
             producto.setNombre(nombre);
         }
         if (!precioTexto.isBlank()) {
-            double precio = Double.parseDouble(precioTexto);
+            double precio = Double.parseDouble(precioTexto); // convierto a double
 
             if (precio <= 0) {
                 System.out.println("el precio debe ser mayor a 0");

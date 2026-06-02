@@ -38,8 +38,8 @@ public class Producto extends Base {
     @Column
     private boolean disponible;
 
-    // cambio parcial
-    @ManyToOne(fetch = FetchType.LAZY) // muchas productos pueden pertenecer a una categoria
+    // cambio parcial                   // cambio a EAGER por lazyinitializationexeption
+    @ManyToOne(fetch = FetchType.EAGER) // muchas productos pueden pertenecer a una categoria
     @JoinColumn(name = "categoria_id") //  propietaria por tener la fk
     private Categoria categoria;
 
