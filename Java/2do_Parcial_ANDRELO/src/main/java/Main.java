@@ -60,7 +60,6 @@ public class Main {
         JPAUtil.close();
     }
 
-    // muestra el submenu de categorias
     public static void menuCategorias() {
 
         int opcion;
@@ -99,7 +98,6 @@ public class Main {
         } while (opcion != 5);
     }
 
-    //submenu de productos
     public static void menuProductos() {
 
         int opcion;
@@ -138,7 +136,6 @@ public class Main {
         } while (opcion != 5);
     }
 
-    // submenu de reportes
     public static void menuReportes() {
 
         int opcion;
@@ -185,7 +182,8 @@ public class Main {
         // categoriaRepository.guardar(categoria);
         // System.out.println("categoria creada");
         Categoria categoriaGuardada = categoriaRepository.guardar(categoria); // guardo en variable para mostrar id
-        System.out.println("categoria creada con id: " + categoriaGuardada.getId());
+        System.out.println("categoria" + categoriaGuardada.getNombre() +
+                " creada con id: " + categoriaGuardada.getId());
     }
 
     public static void bajaCategoria() {
@@ -460,6 +458,7 @@ public class Main {
                     ? producto.getCategoria().getNombre()
                     : "sin categoria";
 
+            // error de lazyinitializationexception
             System.out.println(
                     producto.getId()
                             + " - "
@@ -489,7 +488,6 @@ public class Main {
         System.out.print("id de categoria: ");
         Long idCategoria = scanner.nextLong();
         scanner.nextLine();
-
         // busco segun input
         Categoria categoria = categoriaRepository.buscarPorId(idCategoria).orElse(null);
 
@@ -508,18 +506,11 @@ public class Main {
         }
 
         System.out.println("productos de la categoria: " + categoria.getNombre());
-
         for (Producto producto : productos) {
-
             System.out.println(
-                    producto.getId()
-                            + " - "
-                            + producto.getNombre()
-                            + " - precio: "
-                            + producto.getPrecio()
-                            + " - stock: "
-                            + producto.getStock()
-            );
+                    producto.getId() + " - " + producto.getNombre()
+                            + " - precio: " + producto.getPrecio()
+                            + " - stock: " + producto.getStock());
         }
     }
 }

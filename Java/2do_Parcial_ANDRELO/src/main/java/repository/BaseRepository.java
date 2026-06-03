@@ -18,7 +18,7 @@ public abstract class BaseRepository<T extends Base> {
     }
 
 
-    //1 guardo en la base de datos
+    //1 guardo en la bd
     public T guardar(T entity) {
 
         EntityManager em = emf.createEntityManager();
@@ -38,7 +38,7 @@ public abstract class BaseRepository<T extends Base> {
             em.close();
         }
     }
-    //2 busca una entidad por id
+    //2 busca por id
     public Optional<T> buscarPorId(Long id) {
         EntityManager em = emf.createEntityManager(); // abro emf
         try {
@@ -62,7 +62,7 @@ public abstract class BaseRepository<T extends Base> {
         }
     }
 
-    //4 eliminar logicamente por id
+    //4 eliminar por id
     public boolean eliminarLogico(Long id) {
         EntityManager em = emf.createEntityManager();
         try {
